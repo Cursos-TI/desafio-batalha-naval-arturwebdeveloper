@@ -1,78 +1,69 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+#define TAMANHO 10
 
-int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    int  tabuleiro[10][10] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    };
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
+void inicializarTabuleiro(int tabuleiro[TAMANHO][TAMANHO]) {
+    for (int i = 0; i < TAMANHO; i++) {
+        for (int j = 0; j < TAMANHO; j++) {
+            tabuleiro[i][j] = 0;
+        }
+    }
+}
 
-    tabuleiro[0][2] = 3;
-    tabuleiro[0][3] = 3;
-    tabuleiro[0][4] = 3;
-
-    tabuleiro[3][4] = 3; 
-    tabuleiro[4][4] = 3; 
-    tabuleiro[5][4] = 3;
-
-    tabuleiro[2][6] = 3; 
-    tabuleiro[3][7] = 3; 
-    tabuleiro[4][8] = 3;
-
-    tabuleiro[6][0] = 3;
-    tabuleiro[7][1]= 3;
-    tabuleiro[8][2]= 3;
-
-
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
+void exibirTabuleiro(int tabuleiro[TAMANHO][TAMANHO]) {
+    for (int i = 0; i < TAMANHO; i++) {
+        for (int j = 0; j < TAMANHO; j++) {
             printf("%d ", tabuleiro[i][j]);
         }
         printf("\n");
     }
-    
-    
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+}
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+void aplicarHabilidadeCruz(int tabuleiro[TAMANHO][TAMANHO], int linha, int coluna) {
+    if (linha >= 0 && linha < TAMANHO && coluna >= 0 && coluna < TAMANHO)
+        tabuleiro[linha][coluna] = 5;
+    if (linha - 1 >= 0) tabuleiro[linha - 1][coluna] = 5;
+    if (linha + 1 < TAMANHO) tabuleiro[linha + 1][coluna] = 5;
+    if (coluna - 1 >= 0) tabuleiro[linha][coluna - 1] = 5;
+    if (coluna + 1 < TAMANHO) tabuleiro[linha][coluna + 1] = 5;
+}
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+void aplicarHabilidadeCone(int tabuleiro[TAMANHO][TAMANHO], int linha, int coluna) {
+    if (linha >= 0 && linha < TAMANHO && coluna >= 0 && coluna < TAMANHO)
+        tabuleiro[linha][coluna] = 5;
+    if (linha + 1 < TAMANHO) {
+        if (coluna - 1 >= 0) tabuleiro[linha + 1][coluna - 1] = 5;
+        tabuleiro[linha + 1][coluna] = 5;
+        if (coluna + 1 < TAMANHO) tabuleiro[linha + 1][coluna + 1] = 5;
+    }
+    if (linha + 2 < TAMANHO) {
+        if (coluna - 2 >= 0) tabuleiro[linha + 2][coluna - 2] = 5;
+        if (coluna - 1 >= 0) tabuleiro[linha + 2][coluna - 1] = 5;
+        tabuleiro[linha + 2][coluna] = 5;
+        if (coluna + 1 < TAMANHO) tabuleiro[linha + 2][coluna + 1] = 5;
+        if (coluna + 2 < TAMANHO) tabuleiro[linha + 2][coluna + 2] = 5;
+    }
+}
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+void aplicarHabilidadeOctaedro(int tabuleiro[TAMANHO][TAMANHO], int linha, int coluna) {
+    if (linha >= 0 && linha < TAMANHO && coluna >= 0 && coluna < TAMANHO)
+        tabuleiro[linha][coluna] = 5;
+    if (linha - 1 >= 0) tabuleiro[linha - 1][coluna] = 5;
+    if (linha + 1 < TAMANHO) tabuleiro[linha + 1][coluna] = 5;
+    if (coluna - 1 >= 0) tabuleiro[linha][coluna - 1] = 5;
+    if (coluna + 1 < TAMANHO) tabuleiro[linha][coluna + 1] = 5;
+    if (linha - 2 >= 0) tabuleiro[linha - 2][coluna] = 5;
+    if (linha + 2 < TAMANHO) tabuleiro[linha + 2][coluna] = 5;
+    if (coluna - 2 >= 0) tabuleiro[linha][coluna - 2] = 5;
+    if (coluna + 2 < TAMANHO) tabuleiro[linha][coluna + 2] = 5;
+}
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
-
+int main() {
+    int tabuleiro[TAMANHO][TAMANHO];
+    inicializarTabuleiro(tabuleiro);
+    aplicarHabilidadeCruz(tabuleiro, 5, 5);
+    aplicarHabilidadeCone(tabuleiro, 3, 3);
+    aplicarHabilidadeOctaedro(tabuleiro, 4, 4);
+    exibirTabuleiro(tabuleiro);
     return 0;
 }
