@@ -27,7 +27,16 @@ int main() {
 
     tabuleiro[3][4] = 3; 
     tabuleiro[4][4] = 3; 
-    tabuleiro[4][5] = 3;
+    tabuleiro[5][4] = 3;
+
+    tabuleiro[2][6] = 3; 
+    tabuleiro[3][7] = 3; 
+    tabuleiro[4][8] = 3;
+
+    tabuleiro[6][0] = 3;
+    tabuleiro[7][1]= 3;
+    tabuleiro[8][2]= 3;
+
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
